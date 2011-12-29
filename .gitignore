@@ -1,0 +1,27 @@
+# Git Ignore File
+# ~/emacs.d/.gitignore
+
+# This file contains files that git should ignore,
+# so I don't accidentally update my github emacs
+# configuration repository with files that shouldn't
+# be there
+
+# My global .gitignore file also has some rules
+# see http://help.github.com/ignore-files for some
+# good starting points and how to get one set up
+
+# Another good resource on gitignore files is
+# http://gitready.com/beginner/2009/01/19/ignoring-files.html
+ 
+#ignore my backups directory
+backup/**/*
+backup/**
+
+
+#ignore any session files
+session.*
+
+#ignore the auto-save list
+auto-save-list/**/*
+auto-save-list/**/.*
+auto-save-list/*
