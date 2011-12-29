@@ -11,7 +11,10 @@ TODO
    * edit init.el appropriately so that it works cross platform
    * move autohotkey script into this directory
    * build other setup instructions
-   * test
+   *X test
+      tested another user on same machine
+      still need to test windows
+      still need to test ubuntu (other linux platforms)
    * itemize emacs customizations
 
 Off the top of my head, the following are included here:
@@ -21,3 +24,9 @@ Off the top of my head, the following are included here:
   Color formatting
 
 NOTE - I do have some packages installed from ELPA.  Not sure if those will copy cleanly cross-platform.
+
+INSTALL
+ set up your github ssh keys
+ cd ~/.emacs.d
+ git clone git@github.com:nevetS/Emacs-Configuration.git ./
+ Works for another user on the same machine (Fedora Core 14 / Emacs 23.2.1)
