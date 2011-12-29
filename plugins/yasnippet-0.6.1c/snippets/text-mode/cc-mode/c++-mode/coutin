@@ -1,0 +1,4 @@
+#name : cout (...)
+# --
+std::cout << "${1:text}";
+std::cin >> ${2:invar};$0

@@ -1,0 +1,7 @@
+#name : case (...) (...)
+#expand-env : ((yas/triggers-in-field 'True))
+# --
+case ${1:case}:
+     ${2:statement;}
+break;
+$0
