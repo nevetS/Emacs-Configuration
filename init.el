@@ -116,3 +116,9 @@
 ;for vertical aligned line numbers
 (add-to-list 'load-path "~/.emacs.d/plugins/linum/")
 (require 'linum)
+
+;the following line is in place so that when emacs is called
+; from the command line with a file
+; emacs will open in single-buffer mode
+(setq inhibit-startup-screen t)
+(add-hook 'emacs-startup-hook 'delete-other-windows)
