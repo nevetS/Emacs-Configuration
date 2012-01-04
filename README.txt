@@ -24,6 +24,7 @@ Off the top of my head, the following are included here:
   Color formatting
 
 NOTE - I do have some packages installed from ELPA.  Not sure if those will copy cleanly cross-platform.
+NOTE - Ubuntu shows  Gtk-WARNING **: Unable to locate theme engine in module_path: "pixmap", repeatedly.  The resolution to this is to install the gtk2-engines-pixbuf package
 
 INSTALL
  set up your github ssh keys
