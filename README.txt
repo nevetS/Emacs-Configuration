@@ -14,7 +14,7 @@ TODO
    *X test
       tested another user on same machine
       still need to test windows
-      still need to test ubuntu (other linux platforms)
+      tested configuration on Ubuntu machine with fresh emacs install
    * itemize emacs customizations
 
 Off the top of my head, the following are included here:
