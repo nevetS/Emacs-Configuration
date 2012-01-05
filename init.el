@@ -78,11 +78,12 @@
    (color-theme-initialize)
    (color-theme-zenburn)))
 
-(load-file "~/.emacs.d/plugins/cedet-1.0/common/cedet.el")
-(global-ede-mode 1)
-(semantic-load-enable-code-helpers)
-(require 'semantic-ia)
-(require 'semantic-gcc)
+;commented out cedet
+;(load-file "~/.emacs.d/plugins/cedet-1.0/common/cedet.el")
+;'(global-ede-mode 1)
+;(semantic-load-enable-code-helpers)
+;(require 'semantic-ia)
+;(require 'semantic-gcc)
 
 (add-to-list 'load-path "~/.emacs.d/plugins/unbound/")
 (require 'unbound)
