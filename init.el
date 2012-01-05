@@ -1,10 +1,17 @@
-(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+;The following pushes backups from the current directory into a backups
+; directory
+(setq backup-directory-alist '((".*" . "~/.emacs.d/backup"))
   backup-by-copying t    ; Don't delink hardlinks
   version-control t      ; Use version numbers on backups
   delete-old-versions t  ; Automatically delete excess backups
   kept-new-versions 20   ; how many of the newest versions to keep
   kept-old-versions 5    ; and how many of the old
   )
+
+;The following pushes autosaves from the current directory into an
+; autosaves directory
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
+
 ;the following section is for pymacs(autoload 'pymacs-apply "pymacs")
 ;(autoload 'pymacs-call "pymacs")
 ;(autoload 'pymacs-eval "pymacs" nil t)
