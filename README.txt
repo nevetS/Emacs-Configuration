@@ -56,4 +56,4 @@ INSTALL
 UPDATE
  I've been using git gui for this - 
   Fetch from origin (github)
-  local merge
+  local merge (Merge->Local Merge, select MASTER)
