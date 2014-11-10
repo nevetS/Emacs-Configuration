@@ -25,3 +25,7 @@ session.*
 auto-save-list/**/*
 auto-save-list/**/.*
 auto-save-list/*
+
+tramp
+ac-comphist.dat
+.#**

@@ -33,7 +33,6 @@ CUSTOMIZATIONS
 
 
 TODO
-   X move config from .emacs to init.el
    * edit init.el appropriately so that it works cross platform
    * move autohotkey script into this directory
    X build other setup instructions
@@ -53,7 +52,3 @@ INSTALL
  git clone git@github.com:nevetS/Emacs-Configuration.git ./
  Works for another user on the same machine (Fedora Core 14 / Emacs 23.2.1)
 
-UPDATE
- I've been using git gui for this - 
-  Fetch from origin (github)
-  local merge (Merge->Local Merge, select MASTER)
