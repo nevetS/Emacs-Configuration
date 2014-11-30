@@ -1,9 +1,11 @@
 This is the README for the git repository.
 
-This emacs configuration is not functional at this time.
-
 The goal of setting this up is to be able to easily pull my emacs configuration from machine to machine, account to account and have it work seamlessly - the only necessary step being to initialize a git repository in emacs.d and pull from github.
 
+The master branch is not current.  The 'working' branch has the currently
+active set of scripts for use with emacs 24.x, focused on python development.
+
+It is recommended that you switch to that branch and review the associated README.md
 
 CUSTOMIZATIONS
  * file backups
