@@ -37,11 +37,13 @@
 (add-to-list 'load-path "~/.emacs.d/plugins/graphviz/")
 (add-to-list 'load-path "~/.emacs.d/plugins/linum/")
 (add-to-list 'load-path "~/.emacs.d/plugins/markdownmode/")
-(add-to-list 'load-path "~/.emacs.d/plugins/auto-complete-1.3.1")
+;(add-to-list 'load-path "~/.emacs.d/plugins/auto-complete-1.3.1")
 (add-to-list 'load-path "~/.emacs.d/plugins/window-number")
 (add-to-list 'load-path "~/.emacs.d/plugins/fci")
 (add-to-list 'load-path "~/.emacs.d/plugins/virtualenvwrapper")
 (add-to-list 'load-path "~/.emacs.d/plugins/Pymacs")
+(add-to-list 'load-path "~/.emacs.d/plugins/ac-etags")
+
 ;(add-to-list 'load-path "~/.emacs.d/plugins/pymacs")
 
 (setq py-install-directory "~/.emacs.d/plugins/python-mode.el-6.1.3")
@@ -135,15 +137,23 @@
 (require 'ido)
 (ido-mode t)
 
+;JEDI AUTO-COMPLETIONS
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
 
-;AUTO-COMPLETIONS
-; Importand keys and commands
-; - C-i toggle through menu completions
-(require 'auto-complete)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/plugins/auto-complete-1.3.1/dict")
-(require 'auto-complete-config)
-(ac-config-default)
-(global-auto-complete-mode t)
+
+;; ;AUTO-COMPLETIONS
+;; ; Importand keys and commands
+;; ; - C-i toggle through menu completions
+;; (require 'auto-complete)
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/plugins/auto-complete-1.3.1/dict")
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+;; (global-auto-complete-mode t)
+
+;; ;AUTO-COMPLETION SOURCE ETAGS
+;; (require 'auto-complete-etags)
+;; (setq-default ac-sources (add-to-list 'ac-sources 'ac-source-etags))
 
 ;PYTHON-MODE
 ; Importand keys and commands

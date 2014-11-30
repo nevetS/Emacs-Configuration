@@ -29,3 +29,8 @@ auto-save-list/*
 tramp
 ac-comphist.dat
 .#**
+
+*.elc
+
+autosaves/**
+.python-environments/**

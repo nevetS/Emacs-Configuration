@@ -22,7 +22,8 @@ installation instructions below.
     * color theme selected is zenburn
 	  ![ ](http://orgmode.org/worg/images/color-themes/color-theme-zenburn.png)
  * unbound plugin (finds unbound keys)
- * M-n in c-mode goes to the end of the line, inserts a ; returns and auto-indents
+ * M-n in c-mode goes to the end of the line, inserts a ; returns and
+   auto-indents
  * M-p is tied to return,tab for c-mode
  * linum mode installed and enabled by default (line numbers in left column)
  * startup screen is disabled
@@ -32,8 +33,24 @@ installation instructions below.
  * python-mode.el
     * pymacs
     * ropemacs
- 
-   
+ * jedi completion
+ * magit
+ * yasnippet
+ * graphviz
+ * markdownmode
+ * window-number mode
+ * fill column indicator (default fill column 79)
+ * virtualenvwrapper
+ * etags
+ * hotkeys for expand and contract region (`C-=`, `M-=`)
+ * ido-mode
+ * ipython
+ * flycheck
+ * no scroll bars
+ * no tool bar
+ * no menu bar (`C`-`right-click` for menu)
+ * delete-selection-mode
+ * column number mode enabled by default
 
 
 # TODO #
