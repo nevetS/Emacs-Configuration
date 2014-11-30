@@ -1,11 +1,11 @@
-This is the README for the git repository.
-
-This emacs configuration is not functional at this time.
-
 The goal of setting this up is to be able to easily pull my emacs configuration from machine to machine, account to account and have it work seamlessly - the only necessary step being to initialize a git repository in emacs.d and pull from github.
 
 
-CUSTOMIZATIONS
+This branch is deprecated, but should still work to create a CEDET enabled
+emacs environment, at least with emacs 23.x, if not 24.
+
+# CUSTOMIZATIONS
+
  * file backups
     * file backups are all stored in ~/.emacs.d/backup
     * 20 new versions of backups are saved
@@ -32,7 +32,7 @@ CUSTOMIZATIONS
  * autopair is installed (parens and quotes automatically generate a matching closing entity)
 
 
-TODO
+# TODO
    X move config from .emacs to init.el
    * edit init.el appropriately so that it works cross platform
    * move autohotkey script into this directory
@@ -47,13 +47,15 @@ TODO
 NOTE - I do have some packages installed from ELPA.  Not sure if those will copy cleanly cross-platform.
 NOTE - Ubuntu shows  Gtk-WARNING **: Unable to locate theme engine in module_path: "pixmap", repeatedly.  The resolution to this is to install the gtk2-engines-pixbuf package
 
-INSTALL
+# INSTALL
  set up your github ssh keys
  cd ~/.emacs.d
  git clone git@github.com:nevetS/Emacs-Configuration.git ./
  Works for another user on the same machine (Fedora Core 14 / Emacs 23.2.1)
 
-UPDATE
+# UPDATE
  I've been using git gui for this - 
   Fetch from origin (github)
   local merge (Merge->Local Merge, select MASTER)
+
+
