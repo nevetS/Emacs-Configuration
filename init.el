@@ -1,7 +1,7 @@
 ;;; Package --- Summary
 
 ;; This is the initialization file automatically loaded by emacs.  This file has
-;; been customized to my personal preferences.  
+;; been customized to my personal preferences.
 
 ;;; Commentary:
 
@@ -15,7 +15,7 @@
 ;;  - backups:    location of backup files
 ;;  - auto-saves: location of auto-save files
 ;;  - plugins:    location of plugins
-;;  - elpa:       plugins installed via the Emacs package manager 
+;;  - elpa:       plugins installed via the Emacs package manager
 
 ;; This file is broken up as follows:
 ;;  - load paths
@@ -27,7 +27,7 @@
 
 ;;load paths.  These are the locations of various Emacs plugins
 ;;  I like to keep Lisp code separated by placing each plugin into it's own
-;;  directory.  That makes it easier to manage moving forward.  
+;;  directory.  That makes it easier to manage moving forward.
 
 (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet-0.6.1c")
 (add-to-list 'load-path "~/.emacs.d/plugins/color-theme-6.6.0/")
@@ -50,22 +50,8 @@
 (add-to-list 'load-path py-install-directory)
 
 ;;; MODE SECTION *******************
-;; 
+;;
 ;;  This section contains requirements and configuration for plugin
-
-;YASNIPPET
-; Important keys and commands: 
-; - yas-mode
-; - TAB (to insert a snippet)  
-(require 'yasnippet) ;; not yasnippet-bundle
-;    (setq yas/triggers-in-field 'True)
-;    (yas/initialize)
-;    (yas/load-directory "~/.emacs.d/plugins/yasnippet-0.6.1c/snippets")
-(setq yas-snippet-dirs
-      '("~/.emacs.d/plugins/yasnippet-0.6.1c/snippets/text-mode" 
-	))    
-(yas-global-mode 1)
-;end yasnippet section
 
 ;PACKAGE
 ; Important keys and commands:
@@ -85,6 +71,22 @@
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
+
+
+;YASNIPPET
+; Important keys and commands:
+; - yas-mode
+; - TAB (to insert a snippet)
+(require 'yasnippet) ;; not yasnippet-bundle
+;    (setq yas/triggers-in-field 'True)
+;    (yas/initialize)
+;    (yas/load-directory "~/.emacs.d/plugins/yasnippet-0.6.1c/snippets")
+(setq yas-snippet-dirs
+      '("~/.emacs.d/plugins/yasnippet-0.6.1c/snippets/text-mode"
+	))
+(yas-global-mode 1)
+;end yasnippet section
+
 
 ;UNBOUND
 ; Important keys and commands:
@@ -129,7 +131,7 @@
 ; - C-= expand region
 ; - M-= contract region
 (require 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region) 
+(global-set-key (kbd "C-=") 'er/expand-region)
 (global-set-key (kbd "M-=") 'er/contract-region)
 
 ;IDO MODE
@@ -189,9 +191,28 @@
 (add-hook 'after-change-major-mode-hook 'fci-mode)
 
 ;FLYCHECK-GLOBAL-MODE
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook 'global-flycheck-mode)
 
+;FLYCHECK keymap prefix conflicts with Python Mode
+; change C-c ! to C-c @
+(defun change_flycheckprefix()
+ (define-key flycheck-mode-map flycheck-keymap-prefix nil)
+ (setq flycheck-keymap-prefix (kbd "C-c @"))
+ (define-key flycheck-mode-map flycheck-keymap-prefix
+                flycheck-command-map)
+)
 
+(eval-after-load "flycheck"
+    '(progn
+        (defun my-flycheck-mode-hook()
+            (define-key flycheck-mode-map flycheck-keymap-prefix nil)
+            (setq flycheck-keymap-prefix (kbd "C-c @"))
+            (define-key flycheck-mode-map flycheck-keymap-prefix
+                flycheck-command-map)
+        )
+        (add-hook 'flycheck-mode-hook 'my-flycheck-mode-hook)
+     )
+)
 
 ;; DISABLED MODE CONFIGURATION *******************
 ;getting rid of autopair in favore of smartparens
@@ -209,8 +230,8 @@
 ;(load "~/.emacs.d/plugins/haskell-mode-2.8.0/haskell-site-file")
 ;(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 ;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)        
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent) 
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 ;(setq haskell-program-name "C:/Progra~1/Haskel~1/2011.2.0.1/bin/ghci.exe")
 
 ;CEDET
@@ -271,7 +292,7 @@
 
 
 ;; (def parameter th-frame-config-register ?°
-;;   "The register which is used for storing and restoring frame               
+;;   "The register which is used for storing and restoring frame
 ;; configurations by `th-save-frame-configuration' and
 ;; `th-jump-to-register'.")
 
@@ -343,15 +364,13 @@
 ; (move-end-of-line)
 )
 
- (add-hook 'c-mode-common-hook 
+(add-hook 'c-mode-common-hook
     (lambda()
       (local-set-key (kbd "M-n") 'c-end-line)))
 
 
 (defun space-to-work()
  (local-set-key (kbd "M-p")(kbd "RET TAB")))
- (add-hook 'c-mode-common-hook 'space-to-work)
+(add-hook 'c-mode-common-hook 'space-to-work)
 
-
-
-;the
+;;; init.el ends here
