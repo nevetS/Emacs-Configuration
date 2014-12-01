@@ -331,6 +331,10 @@
 (venv-initialize-eshell)
 (setq venv-location "~/venvs/")
 
+;;
+;;
+(setq org-use-speed-commands t)
+
 ;the following section is for pymacs
 ;(add-to-list 'pymacs-load-path "~/.emacs.d/plugins/Pymacs")
 
