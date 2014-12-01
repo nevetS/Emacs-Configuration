@@ -34,3 +34,6 @@ ac-comphist.dat
 
 autosaves/**
 .python-environments/**
+
+#bookmarks file will vary from machine to machine
+bookmarks
