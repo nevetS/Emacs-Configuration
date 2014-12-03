@@ -1,6 +1,6 @@
 Emacs Configuration
 ===================
-
+*** use the working branch for now, this branch is currently unstable ***
 
 The goal of setting this up is to be able to easily pull my emacs configuration
 from machine to machine.  You can use my emacs configuration by following the
