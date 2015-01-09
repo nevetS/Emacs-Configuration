@@ -43,7 +43,7 @@
 (add-to-list 'load-path "~/.emacs.d/plugins/virtualenvwrapper")
 (add-to-list 'load-path "~/.emacs.d/plugins/Pymacs")
 (add-to-list 'load-path "~/.emacs.d/plugins/ac-etags")
-
+(add-to-list 'load-path "~/.emacs.d/plugins/httprepl")
 ;(add-to-list 'load-path "~/.emacs.d/plugins/pymacs")
 
 (setq py-install-directory "~/.emacs.d/plugins/python-mode.el-6.1.3")
@@ -214,6 +214,9 @@
      )
 )
 
+
+;;HTTP-REPL
+(require 'httprepl)
 ;; DISABLED MODE CONFIGURATION *******************
 ;getting rid of autopair in favore of smartparens
 ;https://github.com/Fuco1/smartparens/wiki
@@ -268,12 +271,13 @@
 
 ;The following pushes backups from the current directory into a backups
 ; directory
-(setq backup-directory-alist '((".*" . "~/.emacs.d/backup"))
+(setq
+  backup-directory-alist '((".*" . "~/.emacs.d/backup"))
   backup-by-copying t    ; Don't delink hardlinks
   version-control t      ; Use version numbers on backups
   delete-old-versions t  ; Automatically delete excess backups
-  kept-new-versions 20   ; how many of the newest versions to keep
-  kept-old-versions 5    ; and how many of the old
+  kept-new-versions 6   ; how many of the newest versions to keep
+  kept-old-versions 2    ; and how many of the old
   )
 
 
@@ -282,6 +286,14 @@
 ; autosaves directory
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
 
+;The following stops the creation of lockfiles.
+; essentially, whenever a file is opened, if this is t, a sym link gets created
+; .#filename->user@emacspid.12345
+; This setting makes it so those files are not generated.
+; It creates danger for simultaneous overwrites, but I'm not particularly concerned
+; about that compared with directory timestamps, inode limits, and orphaned links 
+; left by crashed sessions.
+(setq create-lockfiles nil)
 ;the following line is in place so that when emacs is called
 ; from the command line with a file
 ; emacs will open in single-buffer mode
@@ -377,4 +389,86 @@
  (local-set-key (kbd "M-p")(kbd "RET TAB")))
 (add-hook 'c-mode-common-hook 'space-to-work)
 
+; experimental
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+(setq TeX-save-query nil)
+(setq TeX-PDF-mode t)
+
+(require 'flymake)
+(defun flymake-get-tex-args (file-name)
+(list "pdflatex"
+(list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
+
+(add-hook 'LaTeX-mode-hook 'flymake-mode)
+
+(setq ispell-program-name "aspell") ; could be ispell as well, depending on your preferences
+(setq ispell-dictionary "english") ; this can obviously be set to any language your spell-checking program supports
+
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-buffer)
+
+(defun turn-on-outline-minor-mode ()
+(outline-minor-mode 1))
+
+(add-hook 'LaTeX-mode-hook 'turn-on-outline-minor-mode)
+(add-hook 'latex-mode-hook 'turn-on-outline-minor-mode)
+(setq outline-minor-mode-prefix "C-c C-o") ; Or something else
+
+
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(httprepl-content-type-alist
+   (quote
+    (("text/html" . html)
+     ("application/json" . json)
+     ("application/javascript" . js)
+     ("text/xml" . xml)
+     ("text/plain" . text)
+     ("application/xml" . xml)
+     ("html" . html)
+     ("json" . json)
+     ("javascript" . js)
+     ("xml" . xml)
+     ("text" . text))))
+ '(httprepl-content-type-middleware-alist
+   (quote
+    ((html
+      (lambda
+	(b)
+	(html-mode)
+	b))
+     (json
+      (lambda
+	(b)
+	(json-mode)
+	b))
+     (js
+      (lambda
+	(b)
+	(js-mode)
+	b))
+     (xml
+      (lambda
+	(b)
+	(xml-mode)
+	b))
+     (text
+      (lambda
+	(b)
+	(text-mode)
+	b)))))
+ '(menu-bar-mode nil)
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

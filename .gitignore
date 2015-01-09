@@ -37,3 +37,6 @@ autosaves/**
 
 #bookmarks file will vary from machine to machine
 bookmarks
+
+#ignore .org-id-locations which will be machine specific
+.org-id-locations
