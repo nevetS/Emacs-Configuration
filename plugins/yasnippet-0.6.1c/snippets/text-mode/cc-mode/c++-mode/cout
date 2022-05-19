@@ -1,3 +1,0 @@
-#name : cout (...)
-# --
-std::cout << "${1:text}\n";

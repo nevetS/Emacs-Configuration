@@ -1,0 +1,312 @@
++Title: Emacs Init File
+#+PROPERTY: header-args:emacs-lisp :tangle init.el
+
+
+* General Configuration
+** User Interface
+*** clean interface
+**** Blank startup screen
+#+begin_src emacs-lisp
+;; startup without emacs start page
+(setq inhibit-startup-message t)
+#+end_src
+**** cursor in same sport when paging up or down
+#+begin_src emacs-lisp
+;; cursor in same sport when paging up or down
+(setq scroll-preserve-screen-position t)
+#+end_src
+
+**** disable scroll bars
+#+begin_src emacs-lisp
+;; disable scroll bars
+(scroll-bar-mode -1)
+#+end_src
+
+#+RESULTS:
+
+**** disable tool bar
+#+begin_src emacs-lisp
+;; disable tool bar
+(tool-bar-mode -1)
+#+end_src
+
+#+RESULTS:
+
+**** menu bar available on C-right-click
+#+begin_src emacs-lisp
+;; menu bar available on C-right click
+(menu-bar-mode -1)
+#+end_src
+
+#+RESULTS:
+
+** Personal Preferences
+*** default font
+#+begin_src emacs-lisp
+(set-face-attribute 'default nil :family "Source Code Pro")
+(set-face-attribute 'default nil :height 100)
+#+end_src
+
+*** backups and autosaves
+Backup files and auto-save files are two methods by which Emacs tries
+to protect the user from the consequences of crashes or of the user’s
+own errors. Auto-saving preserves the text from earlier in the current
+editing session; backup files preserve file contents prior to the
+current session.
+
+#+begin_src emacs-lisp
+;The following pushes backups from the current directory into a backups
+; directory
+(setq
+  backup-directory-alist '(("." . "~/Documents/backups/emacs/"))
+  backup-by-copying t    ; Don't delink hardlinks
+  version-control t      ; Use version numbers on backups
+  delete-old-versions t  ; Automatically delete excess backups
+  kept-new-versions 6   ; how many of the newest versions to keep
+  kept-old-versions 2    ; and how many of the old
+  )
+#+end_src
+
+#+begin_src emacs-lisp
+;; place auto-saves into a defined path
+
+(setq auto-save-file-name-transforms '((".*" "~/Documents/autosaves/emacs/" t)))
+;;(make-directory autosave-dir t)
+(auto-save-mode 1)
+#+end_src
+
+*** visual bell
+#+begin_src emacs-lisp
+(setq visual-bell t)
+#+end_src
+*** No lock files
+Lock files are files that emacs automatically creates parallel to the existing file.
+#+begin_src emacs-lisp
+;; don't create lockfiles
+(setq create-lockfiles nil)
+#+end_src
+*** column numbers in command bar
+#+begin_src emacs-lisp
+;; show column numbers in the command bar
+(setq column-number-mode t)
+#+end_src
+*** emacs server
+On startup, we want to ensure emacs server is running if it isn't already.
+#+begin_src emacs-lisp
+; turn on Emacs server
+(if (and (fboundp 'server-running-p)
+         (not (server-running-p)))
+    (server-start) ;if we have a server-running-p function AND it returns false
+  (if (not (fboundp 'server-running-p)) ;else if there simply is no server-running-p function
+      (server-start)
+  )
+ )
+#+end_src
+
+*** show-paren-mode
+Show paren mode will highlight the matching parenthesis when your
+cursor is over one.
+
+#+begin_src emacs-lisp
+;; turn on show-paren-mode
+(show-paren-mode 1)
+#+end_src
+*** fullscreen toggle shortcut
+This enables S-<Enter> to toggle between fullscreen or non-fullscreen
+mode.
+
+#+begin_src emacs-lisp
+;; fullscreen toggling
+(global-set-key (read-kbd-macro "s-<return>") 'toggle-frame-fullscreen)
+#+end_src
+*** enable upper and lower region commands
+#+begin_src emacs-lisp
+;; enable upcase and downcase region commands
+;;  C-x C-u / C-x C-l
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+#+end_src
+*** single dired buffer using 'a'
+#+begin_src emacs-lisp
+;; single dired buffer using 'a' on path
+(put 'dired-find-alternate-file 'disabled nil)
+#+end_src
+*** hide star buffers from ido
+#+begin_src emacs-lisp
+;; hide *buffers from ido
+(setq ido-ignore-buffers '("\*.*\*"))
+#+end_src
+** Hooks
+*** delete trailing whitespace on save
+#+begin_src emacs-lisp
+;; clean up whitespace on save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+end_src
+
+*** executable .sh scripts
+#+begin_src emacs-lisp
+;;chmod +x shell scripts
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+#+end_src
+** Personal functions
+*** transposing lines
+#+begin_src emacs-lisp
+;; transposing lines
+;; from https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/
+(defun move-line-up ()
+  "Move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(global-set-key [(meta shift up)]  'move-line-up)
+(global-set-key [(meta shift down)]  'move-line-down)
+#+end_src
+* Packages
+** package
+Initialize emacs package manager
+
+#+begin_src emacs-lisp
+(require 'package)
+
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                        ("org" . "https://orgmode.org/elpa/")
+                        ("elpa" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+(unless package-archive-contents
+ (package-refresh-contents))
+#+end_src
+
+** use-package
+Load and initialize the use-package package.  This makes installing
+and configuring packages easier
+#+begin_src emacs-lisp
+(unless (package-installed-p 'use-package)
+   (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+#+end_src
+
+** labburn theme
+Install and enable the labburn theme
+#+begin_src emacs-lisp
+(use-package labburn-theme
+  :ensure t
+  :defer t)
+(load-theme 'labburn t)
+
+#+end_src
+** configuration-free packages
+*** all-the-icons
+This provides icons that can be used to make emacs prettier
+#+begin_src emacs-lisp
+;; provides icon font for visuals
+(use-package all-the-icons)
+#+end_src
+*** auto-complete
+This is for automatic completion in development modes
+#+begin_src emacs-lisp
+(use-package auto-complete)
+#+end_src
+*** company-mode
+I believe company mode will provide menus for development mode.  I
+haven't built an emacs config from scratch in a while, so I'm not
+entirely sure.
+#+begin_src emacs-lisp
+(use-package company)
+#+end_src
+*** projectile
+#+begin_src emacs-lisp
+(use-package projectile)
+#+end_src
+*** counsel, ivy, hydra
+#+begin_src emacs-lisp
+(use-package counsel)
+(use-package counsel-etags)
+(use-package counsel-projectile)
+(use-package ivy)
+(use-package hydra)
+(use-package use-package-hydra)
+#+end_src
+
+*** expand-region
+#+begin_src emacs-lisp
+(use-package expand-region)
+#+end_src
+*** flycheck
+#+begin_src emacs-lisp
+(use-package flycheck)
+#+end_src
+*** gg-tags
+#+begin_src emacs-lisp
+(use-package ggtags)
+#+end_src
+*** golang
+#+begin_src emacs-lisp
+(use-package go-mode)
+(use-package go-autocomplete)
+(use-package go-rename)
+#+end_src
+*** lsp
+#+begin_src emacs-lisp
+(use-package lsp-mode)
+(use-package lsp-ui)
+#+end_src
+*** magit
+#+begin_src emacs-lisp
+(use-package magit)
+#+end_src
+*** google translate
+#+begin_src emacs-lisp
+(use-package google-translate)
+#+end_src
+*** Graphing
+**** plantuml
+#+begin_src emacs-lisp
+(use-package plantuml-mode)
+#+end_src
+**** emacs-ess
+#+begin_src emacs-lisp
+(use-package emacs-ess)
+#+end_src
+**** wsd-mode
+#+begin_src emacs-lisp
+(use-package wsd-mode)
+#+end_src
+**** gnuplot
+#+begin_src emacs-lisp
+(use-package gnuplot)
+(use-package gnuplot-mode)
+#+end_src
+*** web development
+**** sass
+#+begin_src emacs-lisp
+(use-package scss-mode)
+#+end_src
+**** beautify
+#+begin_src emacs-lisp
+(use-package web-beautify)
+#+end_src
+*** org-babel packages
+#+begin_src emacs-lisp
+(use-package ob-restclient)
+(use-package ob-blockdiag)
+(use-package ob-go)
+(use-package ob-browser)
+(use-package ob-http)
+(use-package ob-translate)
+#+end_src
+*** yaml
+#+begin_src emacs-lisp
+(use-package yaml-mode)
+#+end_src
